@@ -4,11 +4,12 @@ pipeline {
         stage('Tests') {
             steps {
                 echo 'Running regression tests'
-
-                try {
-                    sh "cucumber -p ci"
-                } finally {
-                    cucumber fileIncludePattern: '**/*.json', jsonReportDirectory: 'log', sortingMethod: 'ALPHABETICAL'
+                script {
+                    try {
+                        sh "cucumber -p ci"
+                    } finally {
+                        cucumber fileIncludePattern: '**/*.json', jsonReportDirectory: 'log', sortingMethod: 'ALPHABETICAL'
+                    }
                 }
             }
         }
