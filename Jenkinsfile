@@ -14,7 +14,12 @@ pipeline {
         stage('Tests') {
             steps {
                 echo 'Running regression tests'
-                sh "bundle exec cucumber -p json"
+                
+                try {
+                    sh "cucumber -p ci"
+                } finally {
+                    cucumber fileIncludePattern: '**/*.json', jsonReportDirectory: 'log', sortingMethod: 'ALPHABETICAL'
+                }
             }
         }
         stage('Acceptance') {
